@@ -1,0 +1,144 @@
+[
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_payeeFullName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_payeeDescription",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_networkType",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_payeeGasFee",
+				"type": "uint256"
+			}
+		],
+		"name": "createPayee",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_id",
+				"type": "uint256"
+			}
+		],
+		"name": "fetchPayeeById",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			},
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_index",
+				"type": "uint256"
+			}
+		],
+		"name": "fundPayee",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			}
+		],
+		"name": "getChatsById",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "message",
+						"type": "string"
+					}
+				],
+				"internalType": "struct CeloAssist.Chat[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getPayeeLength",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_message",
+				"type": "string"
+			}
+		],
+		"name": "storeChatMessages",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+]
