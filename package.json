@@ -2,13 +2,16 @@
   "name": "celo-assist",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://{Longzea}.github.io/{Celo-Assist}",
   "dependencies": {
+    "-": "^0.0.1",
     "@celo/contractkit": "^1.2.4",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "bootstrap": "^5.2.3",
     "ethereum-blockies": "^0.1.1",
+    "gh-pages": "^5.0.0",
     "react": "^17.0.2",
     "react-blockies": "^1.4.1",
     "react-dom": "^17.0.2",
@@ -16,11 +19,14 @@
     "react-scripts": "4.0.3",
     "react-toastify": "^9.1.2",
     "reactstrap": "^9.1.9",
+    "save-dev": "^0.0.1-security",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
