@@ -1,8 +1,8 @@
 {
+  "homepage": "http://Longzea.github.io/Celo-Assist",
   "name": "celo-assist",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://{Longzea}.github.io/{Celo-Assist}",
   "dependencies": {
     "-": "^0.0.1",
     "@celo/contractkit": "^1.2.4",
