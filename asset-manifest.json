@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.js": "/static/js/main.bc649a39.chunk.js",
-    "main.js.map": "/static/js/main.bc649a39.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.43b1620f.js",
-    "runtime-main.js.map": "/static/js/runtime-main.43b1620f.js.map",
-    "static/css/2.f26e749f.chunk.css": "/static/css/2.f26e749f.chunk.css",
-    "static/js/2.2f549f3e.chunk.js": "/static/js/2.2f549f3e.chunk.js",
-    "static/js/2.2f549f3e.chunk.js.map": "/static/js/2.2f549f3e.chunk.js.map",
-    "index.html": "/index.html",
-    "static/css/2.f26e749f.chunk.css.map": "/static/css/2.f26e749f.chunk.css.map",
-    "static/js/2.2f549f3e.chunk.js.LICENSE.txt": "/static/js/2.2f549f3e.chunk.js.LICENSE.txt",
-    "static/media/celo-1.d4b7af52.jpg": "/static/media/celo-1.d4b7af52.jpg"
+    "main.js": "/%7BCelo-Assist%7D/static/js/main.bc649a39.chunk.js",
+    "main.js.map": "/%7BCelo-Assist%7D/static/js/main.bc649a39.chunk.js.map",
+    "runtime-main.js": "/%7BCelo-Assist%7D/static/js/runtime-main.5ec4570d.js",
+    "runtime-main.js.map": "/%7BCelo-Assist%7D/static/js/runtime-main.5ec4570d.js.map",
+    "static/css/2.f26e749f.chunk.css": "/%7BCelo-Assist%7D/static/css/2.f26e749f.chunk.css",
+    "static/js/2.fa8db4f6.chunk.js": "/%7BCelo-Assist%7D/static/js/2.fa8db4f6.chunk.js",
+    "static/js/2.fa8db4f6.chunk.js.map": "/%7BCelo-Assist%7D/static/js/2.fa8db4f6.chunk.js.map",
+    "index.html": "/%7BCelo-Assist%7D/index.html",
+    "static/css/2.f26e749f.chunk.css.map": "/%7BCelo-Assist%7D/static/css/2.f26e749f.chunk.css.map",
+    "static/js/2.fa8db4f6.chunk.js.LICENSE.txt": "/%7BCelo-Assist%7D/static/js/2.fa8db4f6.chunk.js.LICENSE.txt",
+    "static/media/celo-1.d4b7af52.jpg": "/%7BCelo-Assist%7D/static/media/celo-1.d4b7af52.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.43b1620f.js",
+    "static/js/runtime-main.5ec4570d.js",
     "static/css/2.f26e749f.chunk.css",
-    "static/js/2.2f549f3e.chunk.js",
+    "static/js/2.fa8db4f6.chunk.js",
     "static/js/main.bc649a39.chunk.js"
   ]
 }
