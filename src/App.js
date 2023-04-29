@@ -4,6 +4,8 @@ import Web3 from 'web3'
 import { newKitFromWeb3 } from '@celo/contractkit';
 import BigNumber from "bignumber.js";
 import celoassist from './abis/celoassist.abi.json';
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 import erc20 from './abis/irc.abi.json';
 import Header from './components/Header';
 import RequestLists from './components/RequestLists';
@@ -23,6 +25,7 @@ function App() {
   const [cUSDBalance, setcUSDBalance] = useState(0);
   const [requests, setRequests] = useState([]);
   const [modal, setModal] = useState(false);
+  const [loading, setLoading] = useState(false)
   const toggle = () => setModal(!modal);
 
 
@@ -69,7 +72,7 @@ function App() {
   }, [contract]);
 
   const getBalance = async () => {
-    
+    setLoading(true)
     const balance = await kit.getTotalBalance(address);
     const celoBalance = balance.CELO.shiftedBy(-ERC20_DECIMALS).toFixed(2);
     const USDBalance = balance.cUSD.shiftedBy(-ERC20_DECIMALS).toFixed(2);
@@ -78,47 +81,51 @@ function App() {
     setcontract(contract);
     setCeloBalance(celoBalance);
     setcUSDBalance(USDBalance);
+    setLoading(false)
   };
 
   // function to get the payee requests from the celo blockchain
   const getRequests = async function () {
     const requestLength = await contract.methods.getPayeeLength().call();
     const _requests = [];
-
     for (let index = 0; index < requestLength; index++) {
       let _request = new Promise(async (resolve, reject) => {
         let data = await contract.methods.fetchPayeeById(index).call();
         resolve({
           index: index,
-          owner : data[0],
-          payeeFullName : data[1],
-          payeeDescription : data[2],
-          networkType : data[3],
-          payeeGasFee : new BigNumber(data[4]),  
+          owner: data[0],
+          payeeFullName: data[1],
+          payeeDescription: data[2],
+          networkType: data[3],
+          payeeGasFee: new BigNumber(data[4]),
         })
       });
 
       _requests.push(_request);
       setModal(false)
     }
-    const allRequests = await Promise.all(_requests);   
+    const allRequests = await Promise.all(_requests);
     setRequests(allRequests);
     console.log(allRequests);
   }
 
   // function to add payee request to the block
   const createRequest = async (_payeeFullName, _payeeDescription, _payeeGasFee, _networkType) => {
+    setLoading(true)
     try {
       const payeeGasFee = new BigNumber(_payeeGasFee).shiftedBy(ERC20_DECIMALS).toString();
       await contract.methods
         .createPayee(
-          _payeeFullName, _payeeDescription, _networkType,  payeeGasFee
+          _payeeFullName, _payeeDescription, _networkType, payeeGasFee
         )
         .send({ from: address });
+      setLoading(false)
+      alert('Request created')
       getRequests();
 
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      alert('Terminated')
     }
 
   }
@@ -127,8 +134,11 @@ function App() {
   return (
 
     <div className="content">
-      <Header balance={cUSDBalance} celo = {celoBalance} modal={modal} toggle={toggle} createRequest={createRequest}/>
-      <RequestLists requests = {requests}  contract={contract} kit={kit} address={address}/>
+      <Header balance={cUSDBalance} celo={celoBalance} modal={modal}
+        toggle={toggle} createRequest={createRequest} loading={loading} />
+
+      <RequestLists requests={requests} contract={contract} kit={kit} address={address}
+        loading={loading} getBalance={getBalance}/>
     </div>
 
   );

@@ -1,7 +1,7 @@
-# CeloDealer 
-Celo Dealer is a decentralized platform for buying and selling cars using the celo blockchain. With this app, users are able to create a car alias and sell it without any middleman. Users also have the added feature of purchasing cars directly from the app and it will be automatically added to their collection. 
+# Celo Assist
+Celo-Assist is a decentralized platform 
 
-The link to the project described is https://chipper-gumption-41a140.netlify.app/
+The link to the project described is http://Longzea.github.io/Celo-Assist
 
 # Getting Started with Create React App
 
