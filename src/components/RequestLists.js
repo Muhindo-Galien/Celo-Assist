@@ -13,7 +13,6 @@ const cUSDContractAddress = "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1";
 
 const Index = ({ requests, contract, kit, address, loading, getBalance }) => {
   const [modal, setModal] = useState(false);
-  const toggle = () => setModal(!modal);
   const [requestDetails, setRequestDetails] = useState({})
   const [message, setMessage] = useState('')
   const [chats, setChats] = useState(null)
@@ -21,6 +20,12 @@ const Index = ({ requests, contract, kit, address, loading, getBalance }) => {
   const [loadChats, setLoadChats] = useState(false)
   const [viewChats, setViewChats] = useState(false)
   const [disableChatButton, setDisableChaButton] = useState(false)
+
+  const toggle = () => {
+    setViewChats(false)
+    setModal(!modal)
+  };
+
   const closeBtn = (
     <button className="close" onClick={toggle} type="button">
       &times;
