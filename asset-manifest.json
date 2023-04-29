@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.js": "/Celo-Assist/static/js/main.bc649a39.chunk.js",
-    "main.js.map": "/Celo-Assist/static/js/main.bc649a39.chunk.js.map",
+    "main.js": "/Celo-Assist/static/js/main.b3f25bde.chunk.js",
+    "main.js.map": "/Celo-Assist/static/js/main.b3f25bde.chunk.js.map",
     "runtime-main.js": "/Celo-Assist/static/js/runtime-main.9434b508.js",
     "runtime-main.js.map": "/Celo-Assist/static/js/runtime-main.9434b508.js.map",
     "static/css/2.f26e749f.chunk.css": "/Celo-Assist/static/css/2.f26e749f.chunk.css",
-    "static/js/2.a6ed2bf4.chunk.js": "/Celo-Assist/static/js/2.a6ed2bf4.chunk.js",
-    "static/js/2.a6ed2bf4.chunk.js.map": "/Celo-Assist/static/js/2.a6ed2bf4.chunk.js.map",
+    "static/js/2.3f6c0211.chunk.js": "/Celo-Assist/static/js/2.3f6c0211.chunk.js",
+    "static/js/2.3f6c0211.chunk.js.map": "/Celo-Assist/static/js/2.3f6c0211.chunk.js.map",
     "index.html": "/Celo-Assist/index.html",
     "static/css/2.f26e749f.chunk.css.map": "/Celo-Assist/static/css/2.f26e749f.chunk.css.map",
-    "static/js/2.a6ed2bf4.chunk.js.LICENSE.txt": "/Celo-Assist/static/js/2.a6ed2bf4.chunk.js.LICENSE.txt",
+    "static/js/2.3f6c0211.chunk.js.LICENSE.txt": "/Celo-Assist/static/js/2.3f6c0211.chunk.js.LICENSE.txt",
     "static/media/celo-1.d4b7af52.jpg": "/Celo-Assist/static/media/celo-1.d4b7af52.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.9434b508.js",
     "static/css/2.f26e749f.chunk.css",
-    "static/js/2.a6ed2bf4.chunk.js",
-    "static/js/main.bc649a39.chunk.js"
+    "static/js/2.3f6c0211.chunk.js",
+    "static/js/main.b3f25bde.chunk.js"
   ]
 }
