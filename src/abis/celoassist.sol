@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.3;
 import "@openzeppelin/contracts/utils/Strings.sol";
-
+// 1304889
+// 1278614
+// 1275667
 interface IERC20Token {
   function transfer(address, uint256) external returns (bool);
   function approve(address, uint256) external returns (bool);
@@ -16,7 +18,7 @@ interface IERC20Token {
 contract CeloAssist{
     // Declaring variables.
     uint internal payeeLength = 0;
-    address internal cUsdTokenAddress = 0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1;
+    address internal immutable cUsdTokenAddress = 0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1;
      
     
     // Struct to create payee details.
@@ -75,12 +77,13 @@ contract CeloAssist{
     }
 
         // function to fund a payee 
-        function fundPayee(uint _index) public payable  {
+    function fundPayee(uint _index) public payable  {
+        PayeeDetails storage payeeToFund = payee[_index];
         require(
           IERC20Token(cUsdTokenAddress).transferFrom(
             msg.sender,
-            payee[_index].owner,
-            payee[_index].payeeGasFee
+            payeeToFund.owner,
+            payeeToFund.payeeGasFee
           ),
           "Transfer failed."
         );
