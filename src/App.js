@@ -1,23 +1,25 @@
 import React, { useState, useEffect } from 'react';
-
 import Web3 from 'web3'
 import { newKitFromWeb3 } from '@celo/contractkit';
 import BigNumber from "bignumber.js";
 import celoassist from './abis/celoassist.abi.json';
-// import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
 import erc20 from './abis/irc.abi.json';
 import Header from './components/Header';
 import RequestLists from './components/RequestLists';
 
 
 const ERC20_DECIMALS = 18;
-const contractAddress = "0x7bb2a5a715d1304C12355ad34b7CEE200DDe0791";
+
+// Deployed smart contract address.
+const contractAddress = "0x3AcEEA272E68a5B95a087D708Bd7CaBfa9Ebe50b";
+
+// cUSD contract address contract address.
 const cUSDContractAddress = "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1";
 
 
 function App() {
 
+// Declaring variables.
   const [celoBalance, setCeloBalance] = useState(0);
   const [contract, setcontract] = useState(null);
   const [address, setAddress] = useState(null);
@@ -29,6 +31,7 @@ function App() {
   const toggle = () => setModal(!modal);
 
 
+// An async function that connects your wallet to the dApp.
   const connectCeloWallet = async () => {
     if (window.celo) {
       try {
@@ -53,10 +56,13 @@ function App() {
     }
   };
 
+// useEffect that calls  the connect wallet function each time the page loads.
   useEffect(() => {
     connectCeloWallet();
   }, []);
 
+
+// useEffect that calls  the get balance function each time the page loads.  
   useEffect(() => {
     if (kit && address) {
       return getBalance();
@@ -71,6 +77,8 @@ function App() {
     };
   }, [contract]);
 
+
+// An async function that gets the balance in your celo wallet.
   const getBalance = async () => {
     setLoading(true)
     const balance = await kit.getTotalBalance(address);
@@ -84,7 +92,7 @@ function App() {
     setLoading(false)
   };
 
-  // function to get the payee requests from the celo blockchain
+  // An async function that retrives all payee requests from the smart contract.
   const getRequests = async function () {
     const requestLength = await contract.methods.getPayeeLength().call();
     const _requests = [];
@@ -106,10 +114,9 @@ function App() {
     }
     const allRequests = await Promise.all(_requests);
     setRequests(allRequests);
-    console.log(allRequests);
   }
 
-  // function to add payee request to the block
+  // An async function that add payee request to the smart contract
   const createRequest = async (_payeeFullName, _payeeDescription, _payeeGasFee, _networkType) => {
     setLoading(true)
     try {
@@ -124,7 +131,6 @@ function App() {
       getRequests();
 
     } catch (error) {
-      // console.log(error);
       alert('Terminated')
     }
 
@@ -134,11 +140,13 @@ function App() {
   return (
 
     <div className="content">
+    {/* Header component that recieves props */}
       <Header balance={cUSDBalance} celo={celoBalance} modal={modal}
         toggle={toggle} createRequest={createRequest} loading={loading} />
 
+{/* Request List component that recieves props */}
       <RequestLists requests={requests} contract={contract} kit={kit} address={address}
-        loading={loading} getBalance={getBalance}/>
+        loading={loading} getBalance={getBalance} getRequests={getRequests}/>
     </div>
 
   );

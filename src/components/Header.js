@@ -6,12 +6,14 @@ import {
 import banner from '../images/celo-1.jpg';
 
 const Header = ({ modal, toggle, createRequest, balance, celo, loading }) => {
+
+  // Declaring variables
   const [payeeFullName, setPayeeFullName] = useState('');
   const [payeeDescription, setPayeeDescription] = useState('');
   const [networkType, setNetworkType] = useState('')
   const [payeeGasFee, setPayeeGasFee] = useState(0);
-  
 
+  // Button that closes a modal.
   const closeBtn = (
     <button className="close" onClick={toggle} type="button">
       &times;
@@ -22,18 +24,23 @@ const Header = ({ modal, toggle, createRequest, balance, celo, loading }) => {
     <>
       <header className='d-flex justify-content-between p-3'>
         <h6>CeloAssist</h6>
-        <h6 className="shadow">{balance} {' '}cUSD</h6>
-        {/* Celo Balance: {celo} */}
+        <h6 className="shadow">
+          {/* {celo} {" "} Celo */}
+          {balance} {' '}cUSD
+        </h6>
+
       </header>
 
       <br />
 
       <Container>
         <div className='row'>
-          <div className='col-md-6 mt-4'>
+          <div className='col-md-6 '>
             <h5>Celo Assist</h5>
 
-            <p>Celo assist is a platform where  developer assist each other in paying for gas fee on the Celo network</p>
+            <p>Celo-Assist is a decentralized web application platform where a 
+              developer or user can assist another developer or user in paying for their gas fee, mint fee or 
+              anything that might require a small of Celo or cUSD be it testnet or mainnet. </p>
             <Button color="success" onClick={toggle} disabled={loading}>Create a Request</Button>
           </div>
 

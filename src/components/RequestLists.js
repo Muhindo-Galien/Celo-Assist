@@ -7,11 +7,13 @@ import {
 import BigNumber from "bignumber.js";
 import erc20 from '../abis/irc.abi.json';
 const ERC20_DECIMALS = 18;
-const contractAddress = "0x7bb2a5a715d1304C12355ad34b7CEE200DDe0791";
+const contractAddress = "0x3AcEEA272E68a5B95a087D708Bd7CaBfa9Ebe50b";
 const cUSDContractAddress = "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1";
 
 
-const Index = ({ requests, contract, kit, address, loading, getBalance }) => {
+const Index = ({ requests, contract, kit, address, loading, getBalance, getRequests }) => {
+
+  // Declaring variables  
   const [modal, setModal] = useState(false);
   const [requestDetails, setRequestDetails] = useState({})
   const [message, setMessage] = useState('')
@@ -20,19 +22,24 @@ const Index = ({ requests, contract, kit, address, loading, getBalance }) => {
   const [loadChats, setLoadChats] = useState(false)
   const [viewChats, setViewChats] = useState(false)
   const [disableChatButton, setDisableChaButton] = useState(false)
+  const [disableDeletetBtn, setDisableDeletetBtn] = useState(false)
 
+
+  // function that toggles a modal.
   const toggle = () => {
     setViewChats(false)
     setModal(!modal)
   };
 
+  // Button that closes a modal.
   const closeBtn = (
     <button className="close" onClick={toggle} type="button">
       &times;
     </button>
   );
 
-  const getRequests = async function (id) {
+// An async function that fetch a user requests by it's id.
+  const getRequestById = async function (id) {
     let _request = new Promise(async (resolve, reject) => {
       let data = await contract.methods.fetchPayeeById(id).call();
       resolve({
@@ -51,6 +58,7 @@ const Index = ({ requests, contract, kit, address, loading, getBalance }) => {
       .catch((error) => console.error(error));
   }
 
+  // An async function that transfer fund to a payee. 
   const fundPayee = async (_price, _index) => {
     setDisabled(true)
     try {
@@ -71,6 +79,8 @@ const Index = ({ requests, contract, kit, address, loading, getBalance }) => {
     }
   };
 
+
+// An async function that enables you chat to a user  / payee.
   const chat = async (id) => {
     setDisableChaButton(true)
     try {
@@ -91,6 +101,8 @@ const Index = ({ requests, contract, kit, address, loading, getBalance }) => {
     }
   }
 
+
+// An async function that fetchs chat of a user by it's id
   const getChatsById = async function (id) {
     setLoadChats(true)
     try {
@@ -102,6 +114,28 @@ const Index = ({ requests, contract, kit, address, loading, getBalance }) => {
     catch (error) {
       alert('failed to fetch data')
       setLoadChats(false)
+    }
+  }
+
+  // An async function that deletes a user's request
+  const deleteRequestById = async function (id) {
+    setDisableDeletetBtn(true)
+    try {
+      await contract.methods
+        .deletePayeeRequest(
+          id
+        )
+        .send({ from: address });
+      alert('Request deleted')
+      getRequests()
+      setDisableDeletetBtn(false)
+      setModal(false)
+
+    } catch (error) {
+      console.log(error);
+      alert('Error')
+      setDisableDeletetBtn(false)
+
     }
   }
   return (
@@ -117,40 +151,42 @@ const Index = ({ requests, contract, kit, address, loading, getBalance }) => {
               <p style={{ fontSize: '12px' }}>Loading requests please wait...</p>
             </center>
             :
-            requests.map(request =>
-              <div className="card shadow col-lg-4 col-md-4 col-sm-12 ml-3 mr-1 mb-3 p-0">
-                <div className="card-body p-2">
-                  <div className='d-flex'>
-                    <div>
-                      <Blockies
-                        seed={request.owner}
-                        size={10}
-                        scale={3}
-                        className="identicon rounded-circle"
-                      />
+            requests.filter((item, index) => item.owner !== "0x0000000000000000000000000000000000000000")
+              .map(request =>
+                <div className="card shadow col-lg-4 col-md-4 col-sm-12 ml-3 mr-1 mb-3 p-0">
+                  <div className="card-body p-2">
+                    <div className='d-flex'>
+                      <div>
+                        <Blockies
+                          seed={request.owner}
+                          size={10}
+                          scale={3}
+                          className="identicon rounded-circle"
+                        />
+                      </div>
+
+
+                      <div className='mx-3'>
+                        <h6>{request.payeeFullName}</h6>
+                        <p style={{ margin: 0, padding: 0, fontSize: '12px' }}>
+                          {/* Price:${request.payeeGasFee / 10 ** 18} */}
+                          Network Type: {request.networkType}
+                        </p>
+
+                      </div>
+                      <Button size='sm' color='success' className='p-1 flex-end'
+                        onClick={() => getRequestById(request.index)}>View</Button>
                     </div>
 
-
-                    <div className='mx-3'>
-                      <h6>{request.payeeFullName}</h6>
-                      <p style={{ margin: 0, padding: 0, fontSize: '12px' }}>
-                        {/* Price:${request.payeeGasFee / 10 ** 18} */}
-                        Network Type: {request.networkType}
-                      </p>
-
-                    </div>
-                    <Button size='sm' color='success' className='p-1 flex-end'
-                      onClick={() => getRequests(request.index)}>View</Button>
                   </div>
-
-                </div>
-              </div>)}
+                </div>)}
         </div>
       </Container>
 
       <Modal isOpen={modal} toggle={toggle} className={className} backdrop={'static'}>
-        <ModalHeader toggle={toggle} close={closeBtn}>
-          Details:
+        <ModalHeader toggle={toggle} close={closeBtn} className='d-flex justify-content-between'>
+          <span>Details:</span>
+
         </ModalHeader>
         <ModalBody>
           <div className="card">
@@ -173,7 +209,7 @@ const Index = ({ requests, contract, kit, address, loading, getBalance }) => {
                   <p style={{ fontWeight: 'bold' }} className='p-0 m-0'>
                     Amount:
                   </p>
-                  <p style={{ fontSize: '15px' }} className='p-0 m-0'>{requestDetails.payeeGasFee / 10 ** 18} Celo</p>
+                  <p style={{ fontSize: '15px' }} className='p-0 m-0'>{requestDetails.payeeGasFee / 10 ** 18} cUSD / Celo</p>
 
                   <p style={{ fontWeight: 'bold' }} className='p-0 m-0'>Network Type:</p>
                   <p style={{ fontSize: '15px' }} className='p-0 m-0'>{requestDetails.networkType}</p>
@@ -187,7 +223,7 @@ const Index = ({ requests, contract, kit, address, loading, getBalance }) => {
                   >
 
                     {!disabled ?
-                      <span>Transfer </span> :
+                      <span>Transfer {requestDetails.payeeGasFee / 10 ** 18} cUSD </span> :
                       <>
                         <Spinner size="sm">
                           Loading...
@@ -215,6 +251,24 @@ const Index = ({ requests, contract, kit, address, loading, getBalance }) => {
                       </>
                     }
 
+                  </Button>
+
+                  <Button size='sm' className='mx-4' color='danger'
+                    onClick={() => deleteRequestById(requestDetails.id)}
+                    disabled={disableDeletetBtn}
+                  >
+
+                    {!disableDeletetBtn ?
+                      <span>Delete </span> :
+                      <>
+                        <Spinner size="sm">
+                          Loading...
+                        </Spinner>
+                        <span>
+                          {' '}Deleting
+                        </span>
+                      </>
+                    }
                   </Button>
                 </div>
               </div>
@@ -245,18 +299,18 @@ const Index = ({ requests, contract, kit, address, loading, getBalance }) => {
 
                 {chats && chats.map((itm, idx) => (
                   <div className='bg-info rounded mt-2 p-1 text-white d-flex'>
-                   
-                     
-                      <Blockies
-                        seed= {itm[0]}
-                        size={10}
-                        scale={3}
-                        className="identicon rounded-circle"
-                        
-                      />
-                      
 
-                    <p style={{ fontSize: '12px', fontWeight : "bold" }} className='m-0 p-0 mx-2'>{itm[1]}</p>
+
+                    <Blockies
+                      seed={itm[0]}
+                      size={10}
+                      scale={3}
+                      className="identicon rounded-circle"
+
+                    />
+
+
+                    <p style={{ fontSize: '12px', fontWeight: "bold" }} className='m-0 p-0 mx-2'>{itm[1]}</p>
                   </div>
                 )
                 )}

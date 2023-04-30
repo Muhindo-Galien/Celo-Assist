@@ -46,7 +46,7 @@ contract CeloAssist{
         payee[payeeLength] = PayeeDetails({owner : payable(msg.sender), payeeFullName : _payeeFullName,
         payeeDescription : _payeeDescription, networkType : _networkType,
         payeeGasFee :  _payeeGasFee   });
-     payeeLength++;
+        payeeLength++;
 }
 
 
@@ -68,10 +68,14 @@ contract CeloAssist{
         );
     }
 
+    // function for a payee to delete his / her request 
+    function deletePayeeRequest(uint id) public {
+        require(msg.sender == payee[id].owner, "Please ensure you are the owner this request");
+        delete payee[id];
+    }
+
         // function to fund a payee 
         function fundPayee(uint _index) public payable  {
-        // require(payee[_index].owner != msg.sender, "you are already an owner of this request");
-        // require(IERC20Token(cUsdTokenAddress).balanceOf(msg.sender) >= payee[_index].price, "Insufficient balance in cUSDT token");
         require(
           IERC20Token(cUsdTokenAddress).transferFrom(
             msg.sender,
